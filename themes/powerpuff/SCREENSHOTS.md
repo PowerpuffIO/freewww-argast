@@ -4,4 +4,18 @@ Extra images from this folder (language previews **en.png** and **ru.png** are i
 
 ---
 
-*No extra screenshots yet. Add `.png` / `.jpg` files here and run `php themes/powerpuff/build-screenshots-md.php` from the site root (folder with `index.php`) to update this file.*
+## `1.png`
+
+![1.png](1.png)
+
+## `2.png`
+
+![2.png](2.png)
+
+## `3.png`
+
+![3.png](3.png)
+
+## `4.png`
+
+![4.png](4.png)
