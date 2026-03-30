@@ -35,6 +35,7 @@ require dirname(__DIR__) . '/views/layout/auth_page_start.php';
                 <label class="block text-sm text-gray-300 mb-1"><?= h(t('register_password_confirm')) ?></label>
                 <input type="password" name="password_confirm" required minlength="8" class="w-full rounded-lg bg-black/40 border border-white/20 px-4 py-2 text-white" autocomplete="new-password">
             </div>
+            <?php require dirname(__DIR__) . '/views/partials/auth_captcha.php'; ?>
             <p id="regmsg" class="text-sm text-red-400 hidden"></p>
             <button type="submit" class="w-full font-beaufort py-3 rounded-lg bg-[#3b82f6] hover:bg-[#2563eb] text-white font-semibold"><?= h(t('register_submit')) ?></button>
         </form>
@@ -52,6 +53,8 @@ document.getElementById('regf').addEventListener('submit', async function(e) {
     if (j.ok) { window.location.href = j.redirect; return; }
     msg.textContent = j.message || 'Error';
     msg.classList.remove('hidden');
+    if (window.grecaptcha) { try { grecaptcha.reset(); } catch (e) {} }
+    if (window.turnstile) { document.querySelectorAll('.cf-turnstile').forEach(function(el) { try { turnstile.reset(el); } catch (e) {} }); }
 });
 </script>
 <?php require dirname(__DIR__) . '/views/layout/auth_page_end.php';

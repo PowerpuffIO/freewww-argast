@@ -19,6 +19,12 @@ function handle_register_post(): void
 
         return;
     }
+    $cErr = argast_captcha_verify_post();
+    if ($cErr !== null) {
+        echo json_encode(['ok' => false, 'message' => $cErr]);
+
+        return;
+    }
     $username = trim((string) ($_POST['username'] ?? ''));
     $email = trim((string) ($_POST['email'] ?? ''));
     $password = (string) ($_POST['password'] ?? '');

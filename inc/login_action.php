@@ -18,6 +18,12 @@ function handle_login_post(): void
 
         return;
     }
+    $cErr = argast_captcha_verify_post();
+    if ($cErr !== null) {
+        echo json_encode(['ok' => false, 'message' => $cErr]);
+
+        return;
+    }
     $username = trim((string) ($_POST['username'] ?? ''));
     $password = (string) ($_POST['password'] ?? '');
     $isRu = current_lang() === 'ru';

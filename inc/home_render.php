@@ -38,7 +38,6 @@ function render_home_suffix(): string
         '{{SECTION_VK_URL}}' => h(community_url('section_vk')),
         '{{SECTION_TELEGRAM_URL}}' => h(community_url('section_telegram')),
         '{{FOOTER_COPYRIGHT_LINE}}' => '© 2018-' . date('Y') . ' ' . h(site_brand_name()) . '. ' . h(t('footer_trademark')),
-        '{{FOOTER_DEVELOPED_TEXT}}' => h(t('footer_developed_by')),
     ];
 
     return strtr($raw, $repl);

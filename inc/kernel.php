@@ -14,4 +14,5 @@ require_once __DIR__ . '/bootstrap.php';
 require_once __DIR__ . '/srp6.php';
 require_once __DIR__ . '/register_action.php';
 require_once __DIR__ . '/login_action.php';
+require_once __DIR__ . '/forgot_password_action.php';
 require_once __DIR__ . '/argast_dispatch.php';

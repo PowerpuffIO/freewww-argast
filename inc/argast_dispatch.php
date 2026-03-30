@@ -52,6 +52,10 @@ function argast_dispatch(array $segments): void
             handle_login_post();
             exit;
         }
+        if ($method === 'POST' && $first === 'forgot-password') {
+            handle_forgot_password_post();
+            exit;
+        }
     } catch (\Throwable) {
         http_response_code(500);
         echo current_lang() === 'en' ? 'Server error' : 'Ошибка сервера';

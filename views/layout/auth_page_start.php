@@ -22,6 +22,7 @@ $jsB = $pref . '/build/assets/app-BnhhhGtr.js';
     <link rel="stylesheet" href="<?= h($pref) ?>/themes/argast/css/fonts.css">
     <link rel="stylesheet" href="<?= h($pref) ?>/themes/argast/css/local-fallback.css">
     <link rel="icon" href="<?= h($pref) ?>/themes/argast/favicon.ico">
+    <?= argast_captcha_head_markup() ?>
 </head>
 <body class="bg-[#1a1a1a] theme-wotlk text-white min-h-screen flex flex-col">
 <?php require dirname(__DIR__) . '/partials/navbar.php'; ?>

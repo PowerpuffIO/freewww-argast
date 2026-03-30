@@ -36,6 +36,8 @@ require_once __DIR__ . '/auth.php';
 $langFile = dirname(__DIR__) . '/lang/' . current_lang() . '.php';
 $i18n = is_file($langFile) ? (require $langFile) : [];
 
+require_once __DIR__ . '/captcha.php';
+
 $uploadDir = $config['upload_dir'];
 if (!is_dir($uploadDir)) {
     @mkdir($uploadDir, 0755, true);

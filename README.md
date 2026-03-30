@@ -47,6 +47,15 @@ Edit `config.php`:
 | `site_db` | Database for news, settings, users, vote log, etc. |
 | `auth_db` / `characters_db` | Game `auth` and `characters` databases. |
 | `upload_dir` | Writable path for uploads (default: `storage/uploads` under this folder). |
+| `captcha_type` | `0` = off, `1` = Google reCAPTCHA v2, `2` = Cloudflare Turnstile (login / register / forgot-password). |
+| `captcha_site_key` / `captcha_secret_key` | Public and secret keys from Google or Cloudflare. |
+| `captcha_language` | reCAPTCHA `hl` parameter (`en`, `ru`, …). Ignored for Turnstile. |
+
+## ⚠️ Капча / Captcha
+
+**RU:** В `config.php` задайте `captcha_type`, ключи и при необходимости `captcha_language`. Для reCAPTCHA используйте тип v2 «Я не робот».
+
+**EN:** Set `captcha_type`, keys, and optionally `captcha_language` in `config.php`. For Google, use reCAPTCHA v2 checkbox keys.
 
 ## 3. Database
 
@@ -72,12 +81,6 @@ Make `storage/uploads` (and `storage/uploads/news` if used) writable by the web 
 <p align="center">
   <a href="./themes/powerpuff/SCREENSHOTS.md"><strong>View screenshots</strong></a>
 </p>
-
-Place extra images in `themes/powerpuff/`, then regenerate the gallery (from **this folder** in a shell):
-
-```bash
-php themes/powerpuff/build-screenshots-md.php
-```
 
 ### Language preview images
 

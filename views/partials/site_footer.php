@@ -45,8 +45,5 @@ $u = auth_user();
                 </ul>
             </div>
         </div>
-        <div class="text-center text-gray-500 text-sm mt-8 pt-6 border-t border-white/10">
-            <a href="https://powerpuff.pro/" target="_blank" rel="noopener noreferrer" class="hover:text-blue-400 transition-colors"><?= h(t('footer_developed_by')) ?></a>
-        </div>
     </div>
 </footer>
