@@ -1,0 +1,13 @@
+# This website is provided free of charge.
+# Author: Powerpuff — https://powerpuff.pro/
+# Discord: https://discord.gg/QwCsWtP99A
+# GitHub: https://github.com/PowerpuffIO
+
+DirectoryIndex index.php
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule ^templates/ - [F,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]
+</IfModule>

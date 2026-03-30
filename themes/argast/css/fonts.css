@@ -1,0 +1,43 @@
+/*
+ * This website is provided free of charge.
+ * Author: Powerpuff — https://powerpuff.pro/
+ * Discord: https://discord.gg/QwCsWtP99A
+ * GitHub: https://github.com/PowerpuffIO
+ */
+
+@font-face {
+    font-family: 'BeaufortforLOL';
+    src: url('/themes/argast/fonts/BeaufortforLOL-Bold.eot');
+    src: url('/themes/argast/fonts/BeaufortforLOL-Bold.eot?#iefix') format('embedded-opentype'),
+    url('/themes/argast/fonts/BeaufortforLOL-Bold.woff2') format('woff2'),
+    url('/themes/argast/fonts/BeaufortforLOL-Bold.woff') format('woff'),
+    url('/themes/argast/fonts/BeaufortforLOL-Bold.ttf') format('truetype'),
+    url('/themes/argast/fonts/BeaufortforLOL-Bold.svg#BeaufortforLOL-Bold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('/themes/argast/fonts/Inter-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('/themes/argast/fonts/Inter-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('/themes/argast/fonts/Inter-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}

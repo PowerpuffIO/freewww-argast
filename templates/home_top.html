@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<!--
+  This website is provided free of charge.
+  Author: Powerpuff — https://powerpuff.pro/
+  Discord: https://discord.gg/QwCsWtP99A
+  GitHub: https://github.com/PowerpuffIO
+-->
+<html lang="ru" prefix="og: http://ogp.me/ns#" x-data="argastApp()" x-init="init()">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+            <title>Argast.su -  бесплатные сервера WoW | Argast.su</title>
+    
+            <meta name="description" content="Игровые миры World of Warcraft: Wrath of the Lich King на Argast.su.">
+    
+    <link rel="preload" as="style" href="https://argast.su/build/assets/app-CoYDE0Sa.css" /><link rel="modulepreload" as="script" href="https://argast.su/build/assets/app-BnhhhGtr.js" /><link rel="stylesheet" href="https://argast.su/build/assets/app-CoYDE0Sa.css" data-navigate-track="reload" /><script type="module" src="https://argast.su/build/assets/app-BnhhhGtr.js" data-navigate-track="reload"></script>
+    
+    <link rel="stylesheet" href="https://argast.su/themes/argast/css/fonts.css">
+    <link rel="stylesheet" href="https://argast.su/themes/argast/css/local-fallback.css">
+
+    <link rel="icon" href="https://argast.su/themes/argast/favicon.ico">
+
+    <link rel="alternate" hreflang="x-default" href="index.html">
+    <link rel="alternate" hreflang="en" href="https://argast.su/en">
+</head>
+<body class="bg-[#1a1a1a] theme-wotlk text-white min-h-screen flex flex-col" x-data x-init="(() => {
+    const list = [
+        { id: 'wotlk-x1',   expansion: 'WotLK',  label: 'WotLK x1 Кузня Крови',        short: 'WotLK x1' },
+        { id: 'wotlk-x3',   expansion: 'WotLK',  label: 'WotLK x3 Сумеречный молот',   short: 'WotLK x3' },
+        { id: 'wotlk-x100', expansion: 'WotLK',  label: 'WotLK x100 Тернистая Долина', short: 'WotLK x100' }
+    ];
+    Alpine.store('worlds', {
+        list: list,
+        selectedId: 'wotlk-x1',
+        serverMenuOpen: false,
+        currentExpansion: 'wotlk'
+    });
+})();">
+
+<header class="pointer-events-auto header-wotlk fixed left-6 right-6 top-6 z-50 transition-all duration-500 rounded-2xl"
+        x-data="{
+                openDropdown: null,
+                mobileMenuOpen: false,
+                arrowLeft: 0,
+                setArrowUnder(buttonEl, dropdownEl) {
+                    if (!buttonEl || !dropdownEl) return;
+                    const btn = buttonEl.getBoundingClientRect();
+                    const dd = dropdownEl.getBoundingClientRect();
+                    this.arrowLeft = Math.max(8, Math.min(dd.width - 8, (btn.left - dd.left) + btn.width / 2));
+                }
+            }"
+        @click.away="openDropdown = null">
+        <div class="px-6 py-3">
+            <nav class="flex items-center justify-between">
+                <a href="index.html" class="flex items-center space-x-3 hover:opacity-80 transition-opacity duration-300" @click="scrollToTop()">
+                    <img src="https://argast.su/themes/argast/Images/argast_mini.png" alt="ARGAST Logo" class="h-11 w-auto" style="filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.6)) drop-shadow(0 0 1px rgba(0, 0, 0, 0.8));">
+                    <div>
+                        <span class="text-xl font-beaufort" style="color: #F5E6D3;">ARGAST.SU</span>
+                        <span class="text-xs text-white/70 block leading-none">комплекс игровых серверов</span>
+                    </div>
+                </a>
+
+                <div class="hidden xl:flex items-center space-x-8">
+                    <a href="https://argast.su/news/all" class="nav-link text-white/80 hover:text-white transition-colors text-lg font-medium">Новости</a>
+                    <a href="https://argast.su/start" class="nav-link text-white/80 hover:text-white transition-colors text-lg font-medium">Начать играть</a>
+
+                    <span class="text-white/90 text-lg font-medium flex items-center gap-2 select-none" title="Wrath of the Lich King">
+                        <img src="https://argast.su/themes/argast/Images/Icons/wotlksmall.jpg" alt="" class="w-6 h-6 rounded object-cover" width="24" height="24">
+                        WotLK
+                    </span>
+
+                    <div class="relative" style="position: relative;">
+                        <button x-ref="statusBtn" @click="openDropdown = openDropdown === 'status' ? null : 'status'; $nextTick(() => { if (openDropdown === 'status') setArrowUnder($refs.statusBtn, $refs.statusDd) })"
+                                class="dropdown-btn text-white/80 hover:text-white transition-colors text-lg font-medium flex items-center whitespace-nowrap relative">
+                            <span>Статус</span>
+                            <svg class="w-3 h-3 ml-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                            </svg>
+                        </button>
+                        <div x-cloak
+                             x-show="openDropdown === 'status'"
+                             x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="opacity-0 transform scale-95"
+                             x-transition:enter-end="opacity-100 transform scale-100"
+                             class="absolute top-full left-0 mt-8 w-64 transition-all duration-500 rounded-xl shadow-2xl p-1 dropdown-wotlk"
+                             x-ref="statusDd">
+                            <div class="dropdown-arrow dropdown-arrow-wotlk"
+                                 :style="`left: ${arrowLeft - 8}px`"></div>
+                            <a href="https://argast.su/status/wotlk-x1"
+       class="flex items-center px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 transition-colors rounded-sm text-xs relative select-none outline-none"
+       :class="$store.worlds.selectedId === 'wotlk-x1' ? 'border-r-2 border-blue-400' : ''">
+        <div class="flex items-center flex-1">
+            <div class="relative mr-2">
+                <img src="https://argast.su/themes/argast/Images/Icons/wotlksmall.jpg"
+                     alt="Wrath of the Lich King"
+                     class="w-4 h-4 rounded object-cover">
+            </div>
+            <div class="flex-1 min-w-0">
+                <div class="truncate">WotLK X1 &quot;Кузня Крови&quot;</div>
+                                    <div class="text-xs text-gray-400">17 игроков</div>
+                            </div>
+        </div>
+    </a>
+    <a href="https://argast.su/status/wotlk-x3"
+       class="flex items-center px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 transition-colors rounded-sm text-xs relative select-none outline-none"
+       :class="$store.worlds.selectedId === 'wotlk-x3' ? 'border-r-2 border-blue-400' : ''">
+        <div class="flex items-center flex-1">
+            <div class="relative mr-2">
+                <img src="https://argast.su/themes/argast/Images/Icons/wotlksmall.jpg"
+                     alt="Wrath of the Lich King"
+                     class="w-4 h-4 rounded object-cover">
+            </div>
+            <div class="flex-1 min-w-0">
+                <div class="truncate">WotLK X3 &quot;Сумеречный Молот&quot;</div>
+                                    <div class="text-xs text-gray-400">1 игроков</div>
+                            </div>
+        </div>
+    </a>
+    <a href="https://argast.su/status/wotlk-x100"
+       class="flex items-center px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 transition-colors rounded-sm text-xs relative select-none outline-none"
+       :class="$store.worlds.selectedId === 'wotlk-x100' ? 'border-r-2 border-blue-400' : ''">
+        <div class="flex items-center flex-1">
+            <div class="relative mr-2">
+                <img src="https://argast.su/themes/argast/Images/Icons/wotlksmall.jpg"
+                     alt="Wrath of the Lich King"
+                     class="w-4 h-4 rounded object-cover">
+            </div>
+            <div class="flex-1 min-w-0">
+                <div class="truncate">WotLK X100 &quot;Тернистая Долина&quot;</div>
+                            </div>
+        </div>
+    </a>
+                        </div>
+                    </div>
+
+                    <div class="relative" style="position: relative;">
+                        <button x-ref="communitiesBtn" @click="openDropdown = openDropdown === 'communities' ? null : 'communities'; $nextTick(() => { if (openDropdown === 'communities') setArrowUnder($refs.communitiesBtn, $refs.communitiesDd) })"
+                                class="dropdown-btn text-white/80 hover:text-white transition-colors text-lg font-medium flex items-center whitespace-nowrap relative">
+                            <span>Сообщества</span>
+                            <svg class="w-3 h-3 ml-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                            </svg>
+                        </button>
+                        <div x-cloak
+                             x-show="openDropdown === 'communities'"
+                             x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="opacity-0 transform scale-95"
+                             x-transition:enter-end="opacity-100 transform scale-100"
+                             class="absolute top-full left-0 mt-8 w-40 transition-all duration-500 rounded-xl shadow-2xl p-1 dropdown-wotlk"
+                             x-ref="communitiesDd">
+                            <div class="dropdown-arrow dropdown-arrow-wotlk"
+                                 :style="`left: ${arrowLeft - 8}px`"></div>
+                            <a href="https://discord.gg/6J9Saxud4F" target="_blank" class="flex items-center px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 transition-colors rounded-sm text-sm relative select-none outline-none">
+                                <img src="https://argast.su/themes/argast/Images/Icons/discord.png" alt="Discord" class="w-5 h-5 rounded mr-3 object-cover">
+                                Discord
+                            </a>
+                            <a href="https://vk.com/argast_servers" target="_blank" class="flex items-center px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 transition-colors rounded-sm text-sm relative select-none outline-none">
+                                <img src="https://argast.su/themes/argast/Images/Icons/vk.png" alt="VKontakte" class="w-5 h-5 rounded mr-3 object-cover">
+                                VKontakte
+                            </a>
+                            <a href="https://t.me/+PDzqJzr9Eq80MTJk" target="_blank" class="flex items-center px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 transition-colors rounded-sm text-sm relative select-none outline-none">
+                                <img src="https://argast.su/themes/argast/Images/Icons/telegram.png" alt="Telegram" class="w-5 h-5 rounded mr-3 object-cover">
+                                Telegram
+                            </a>
+                            <a href="https://argast.su/forum" target="_blank" class="flex items-center px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 transition-colors rounded-sm text-sm relative select-none outline-none">
+                                <img src="https://argast.su/themes/argast/Images/Icons/forum_icon.png" alt="Форум" class="w-5 h-5 rounded mr-3 object-cover">
+                                Форум
+                            </a>
+                        </div>
+                    </div>
+
+                    <a href="https://argast.su/forum/section/8" target="_blank" class="nav-link text-white/80 hover:text-white transition-colors text-lg font-medium">Баг-трекер</a>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <div class="relative hidden lg:block" style="position: relative;">
+                        <button x-ref="languageBtn" @click="openDropdown = openDropdown === 'language' ? null : 'language'; $nextTick(() => { if (openDropdown === 'language') setArrowUnder($refs.languageBtn, $refs.languageDd) })"
+                                class="flex items-center text-white/80 hover:text-white transition-colors text-lg font-medium whitespace-nowrap">
+                            <span>Русский</span>
+                            <svg class="w-3 h-3 ml-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                            </svg>
+                        </button>
+                        <div x-cloak
+                             x-show="openDropdown === 'language'"
+                             x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="opacity-0 transform scale-95"
+                             x-transition:enter-end="opacity-100 transform scale-100"
+                             class="absolute top-full right-0 mt-8 w-32 transition-all duration-500 rounded-xl shadow-2xl p-1 dropdown-wotlk"
+                             x-ref="languageDd">
+                            <div class="dropdown-arrow dropdown-arrow-wotlk"
+                                 :style="`left: ${arrowLeft - 8}px`"></div>
+                                                            <a rel="alternate" hreflang="en"
+                                   href="https://argast.su/en"
+                                   class="w-full flex items-center px-3 py-2 text-gray-300 hover:text-white hover:bg-white/10 transition-colors rounded-sm text-sm relative select-none outline-none "
+                                   @click="openDropdown = null">
+                                        <img src="https://argast.su/themes/argast/Images/flag_en.png" alt="English" class="w-4 h-3 object-cover rounded-sm mr-2">
+                                    English
+                                </a>
+                                                            <a rel="alternate" hreflang="ru"
+                                   href="https://argast.su/ru"
+                                   class="w-full flex items-center px-3 py-2 text-gray-300 hover:text-white hover:bg-white/10 transition-colors rounded-sm text-sm relative select-none outline-none text-white bg-white/10"
+                                   @click="openDropdown = null">
+                                        <img src="https://argast.su/themes/argast/Images/flag_ru.png" alt="Русский" class="w-4 h-3 object-cover rounded-sm mr-2">
+                                    Русский
+                                </a>
+                                                    </div>
+                    </div>
+
+                        <div class="hidden md:flex items-center gap-3">
+                                <a href="https://argast.su/login" class="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-white/90 text-white px-5 py-2.5 text-sm font-medium hover:bg-white/10 hover:border-white transition-colors shadow-sm">
+                                    <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                                        <polyline points="10,17 15,12 10,7"/>
+                                        <line x1="15" y1="12" x2="3" y2="12"/>
+                                    </svg>
+                                    Войти
+                                </a>
+                                <a href="https://argast.su/register" class="inline-flex items-center justify-center gap-2 rounded-lg bg-[#3b82f6] hover:bg-[#2563eb] text-white px-5 py-2.5 text-sm font-semibold shadow-lg shadow-blue-900/30 border-2 border-transparent transition-colors">
+                                    <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                                        <circle cx="9" cy="7" r="4"/>
+                                        <path d="m22 21-2-2"/>
+                                        <path d="M16 16h6"/>
+                                    </svg>
+                                    Регистрация
+                                </a>
+                        </div>
+
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="xl:hidden text-white/80 hover:text-white p-2">
+                        <svg x-show="!mobileMenuOpen" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                        <svg x-show="mobileMenuOpen" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </nav>
+        </div>
+        
+        
+        <div x-cloak
+             x-show="mobileMenuOpen"
+             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="opacity-0 transform -translate-y-4"
+             x-transition:enter-end="opacity-100 transform translate-y-0"
+             x-transition:leave="transition ease-in duration-150"
+             x-transition:leave-start="opacity-100 transform translate-y-0"
+             x-transition:leave-end="opacity-0 transform -translate-y-4"
+             class="xl:hidden border-t border-blue-400/20 mt-3">
+            <div class="max-h-[calc(100vh-10rem)] overflow-y-auto overscroll-contain px-6 pt-4 pb-3">
+                <div class="flex flex-col space-y-4">
+                <a href="https://argast.su/news/all" class="text-white/80 hover:text-white transition-colors text-lg font-medium py-2" @click="mobileMenuOpen = false">Новости</a>
+                <a href="https://argast.su/start" class="text-white/80 hover:text-white transition-colors text-lg font-medium py-2" @click="mobileMenuOpen = false">Начать играть</a>
+
+                <div class="flex items-center gap-2 py-1 text-white/90 text-lg font-medium">
+                    <img src="https://argast.su/themes/argast/Images/Icons/wotlksmall.jpg" alt="" class="w-5 h-5 rounded object-cover" width="20" height="20">
+                    WotLK
+                </div>
+                
+                <div class="py-2">
+                    <div class="text-white/80 text-lg font-medium mb-2">Статус</div>
+                    <div class="ml-4">
+                        <a href="https://argast.su/status/wotlk-x1"
+       class="flex items-center px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 transition-colors rounded-sm text-xs relative select-none outline-none"
+       :class="$store.worlds.selectedId === 'wotlk-x1' ? 'border-r-2 border-blue-400' : ''">
+        <div class="flex items-center flex-1">
+            <div class="relative mr-2">
+                <img src="https://argast.su/themes/argast/Images/Icons/wotlksmall.jpg"
+                     alt="Wrath of the Lich King"
+                     class="w-4 h-4 rounded object-cover">
+            </div>
+            <div class="flex-1 min-w-0">
+                <div class="truncate">WotLK X1 &quot;Кузня Крови&quot;</div>
+                                    <div class="text-xs text-gray-400">17 игроков</div>
+                            </div>
+        </div>
+    </a>
+    <a href="https://argast.su/status/wotlk-x3"
+       class="flex items-center px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 transition-colors rounded-sm text-xs relative select-none outline-none"
+       :class="$store.worlds.selectedId === 'wotlk-x3' ? 'border-r-2 border-blue-400' : ''">
+        <div class="flex items-center flex-1">
+            <div class="relative mr-2">
+                <img src="https://argast.su/themes/argast/Images/Icons/wotlksmall.jpg"
+                     alt="Wrath of the Lich King"
+                     class="w-4 h-4 rounded object-cover">
+            </div>
+            <div class="flex-1 min-w-0">
+                <div class="truncate">WotLK X3 &quot;Сумеречный Молот&quot;</div>
+                                    <div class="text-xs text-gray-400">1 игроков</div>
+                            </div>
+        </div>
+    </a>
+    <a href="https://argast.su/status/wotlk-x100"
+       class="flex items-center px-4 py-3 text-gray-300 hover:text-white hover:bg-white/10 transition-colors rounded-sm text-xs relative select-none outline-none"
+       :class="$store.worlds.selectedId === 'wotlk-x100' ? 'border-r-2 border-blue-400' : ''">
+        <div class="flex items-center flex-1">
+            <div class="relative mr-2">
+                <img src="https://argast.su/themes/argast/Images/Icons/wotlksmall.jpg"
+                     alt="Wrath of the Lich King"
+                     class="w-4 h-4 rounded object-cover">
+            </div>
+            <div class="flex-1 min-w-0">
+                <div class="truncate">WotLK X100 &quot;Тернистая Долина&quot;</div>
+                            </div>
+        </div>
+    </a>
+                    </div>
+                </div>
+
+                <div class="py-2">
+                    <div class="text-white/80 text-lg font-medium mb-2">Сообщества</div>
+                    <div class="flex flex-col space-y-1 ml-4">
+                        <a href="https://discord.gg/6J9Saxud4F" target="_blank" class="flex items-center px-4 py-2 text-gray-300 hover:text-white hover:bg-white/10 transition-colors rounded-sm text-sm" @click="mobileMenuOpen = false">
+                            <img src="https://argast.su/themes/argast/Images/Icons/discord.png" alt="Discord" class="w-5 h-5 rounded mr-3 object-cover">
+                            Discord
+                        </a>
+                        <a href="https://vk.com/argast_servers" target="_blank" class="flex items-center px-4 py-2 text-gray-300 hover:text-white hover:bg-white/10 transition-colors rounded-sm text-sm" @click="mobileMenuOpen = false">
+                            <img src="https://argast.su/themes/argast/Images/Icons/vk.png" alt="VKontakte" class="w-5 h-5 rounded mr-3 object-cover">
+                            VKontakte
+                        </a>
+                        <a href="https://t.me/+PDzqJzr9Eq80MTJk" target="_blank" class="flex items-center px-4 py-2 text-gray-300 hover:text-white hover:bg-white/10 transition-colors rounded-sm text-sm" @click="mobileMenuOpen = false">
+                            <img src="https://argast.su/themes/argast/Images/Icons/telegram.png" alt="Telegram" class="w-5 h-5 rounded mr-3 object-cover">
+                            Telegram
+                        </a>
+                        <a href="https://argast.su/forum" target="_blank" class="flex items-center px-4 py-2 text-gray-300 hover:text-white hover:bg-white/10 transition-colors rounded-sm text-sm" @click="mobileMenuOpen = false">
+                            <img src="https://argast.su/themes/argast/Images/Icons/forum_icon.png" alt="Форум" class="w-5 h-5 rounded mr-3 object-cover">
+                            Форум
+                        </a>
+                    </div>
+                </div>
+
+                <a href="https://argast.su/forum/section/8" target="_blank" class="text-white/80 hover:text-white transition-colors text-lg font-medium py-2" @click="mobileMenuOpen = false">Баг-трекер</a>
+
+                <div class="py-2 border-t border-white/10 pt-4">
+                                            <a rel="alternate" hreflang="en"
+                           href="https://argast.su/en"
+                           class="flex items-center px-3 py-2 text-gray-300 hover:text-white hover:bg-white/10 transition-colors rounded-sm text-sm "
+                           @click="mobileMenuOpen = false">
+                            <img src="https://argast.su/themes/argast/Images/flag_en.png" alt="English" class="w-4 h-3 object-cover rounded-sm mr-2">
+                            English
+                        </a>
+                                            <a rel="alternate" hreflang="ru"
+                           href="https://argast.su/ru"
+                           class="flex items-center px-3 py-2 text-gray-300 hover:text-white hover:bg-white/10 transition-colors rounded-sm text-sm text-white bg-white/10"
+                           @click="mobileMenuOpen = false">
+                            <img src="https://argast.su/themes/argast/Images/flag_ru.png" alt="Русский" class="w-4 h-3 object-cover rounded-sm mr-2">
+                            Русский
+                        </a>
+                                    </div>
+
+                <div class="flex flex-col space-y-2 pt-2">
+                        <a href="https://argast.su/login" class="text-center text-white border-2 border-white/90 hover:border-white hover:bg-white/10 transition-colors rounded-lg text-sm font-medium py-3 px-6" @click="mobileMenuOpen = false">
+                            Войти
+                        </a>
+                        <a href="https://argast.su/register" class="text-center bg-[#3b82f6] hover:bg-[#2563eb] text-white font-semibold shadow-lg shadow-blue-900/25 transition-colors rounded-lg text-sm py-3 px-6" @click="mobileMenuOpen = false">
+                            Регистрация
+                        </a>
+                </div>
+                </div>
+            </div>
+        </div>
+</header>
+
+<main class="flex-grow">
+    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        
+        <div id="wotlk-video-container" class="pointer-events-none absolute inset-0 z-10 w-full h-full opacity-100">
+            <video
+                id="wotlkVideo"
+                class="absolute inset-0 w-full h-full object-cover video-background"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="auto"
+                src="https://argast.su/themes/argast/Video/wotlk_background.webm">
+                Ваш браузер не поддерживает видео.
+            </video>
+            <div class="absolute inset-0 bg-black/50"></div>
+            
+            <div class="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black/80 to-transparent"></div>
+            
+            <div class="absolute bottom-0 left-0 right-0 h-44 bg-gradient-to-t fade-blur" :style="getVideoGradientStyle()"></div>
+        </div>
+
+        
+        <div class="relative z-10 pointer-events-auto text-center text-white px-6 max-w-7xl mx-auto">
+            <h1 class="text-5xl lg:text-7xl font-beaufort mb-4 text-shadow" style="color: #F5E6D3;">
+                ARGAST<span class="text-orange-400">.SU</span>
+            </h1>
+            <div class="text-xl lg:text-2xl mb-8 text-shadow font-medium opacity-90 h-8 flex items-center justify-center relative w-full"
+                 x-data="{
+                     taglines: [
+                         'Комплекс серверов World of Warcraft',
+                         'Бесплатная игра без компромиссов',
+                         'Эпические приключения в классическом Азероте',
+                         'Стабильные серверы с активным сообществом',
+                         'Ваши самые любимые игровые дополнения'
+                     ],
+                     currentIndex: 0,
+                     isChanging: false,
+                     changeTagline() {
+                         this.isChanging = true;
+                         setTimeout(() => {
+                             this.currentIndex = (this.currentIndex + 1) % this.taglines.length;
+                             this.isChanging = false;
+                         }, 400);
+                     }
+                 }"
+                 x-init="setInterval(() => { changeTagline() }, 7000)">
+                <p class="transition-all duration-400 ease-in-out transform whitespace-nowrap text-center w-full"
+                   :class="isChanging ? 'opacity-0 translate-x-8' : 'opacity-100 translate-x-0'"
+                   x-text="taglines[currentIndex]"></p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="https://argast.su/start" class="font-beaufort inline-flex items-center justify-center px-8 py-3 rounded-md text-lg font-semibold text-white bg-[#3b82f6] hover:bg-[#2563eb] shadow-xl shadow-blue-900/35 border-0 transition-all duration-300 hover:scale-[1.02]">
+                    Начать играть
+                </a>
+                <button @click="scrollToVideo()" class="border-2 border-orange-400 text-orange-400 hover:bg-orange-400 hover:text-black font-beaufort px-8 py-3 rounded-md transition-all duration-300 transform hover:scale-105 text-lg">
+                    Смотреть промо
+                </button>
+            </div>
+        </div>
+
+        <div class="absolute left-0 right-0 w-full z-20" style="bottom: -6px; margin: 0; padding: 0; line-height: 0; font-size: 0;">
+            <img src="https://argast.su/themes/argast/Images/Backgrounds/divider_up.svg" alt="Divider" class="w-full h-auto" :class="getDividerClass()" style="display: block; margin: 0; padding: 0; vertical-align: bottom; transform: translateY(0);">
+        </div>
+    </section>
